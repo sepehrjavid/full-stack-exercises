@@ -2,9 +2,7 @@ import React from 'react'
 
 const Button = ({text, onClickFunction}) => {
     return (
-        <>
-            <button onClick={onClickFunction}>{text}</button>
-        </>
+        <button onClick={onClickFunction}>{text}</button>
     )
 };
 

@@ -14,12 +14,16 @@ const Statistics = ({goodCount, badCount, neutralCount}) => {
         return (
             <div>
                 <h2>Statistics</h2>
-                <StatisticLine text="Good" value={goodCount}/>
-                <StatisticLine text="Neutral" value={neutralCount}/>
-                <StatisticLine text="Bad" value={badCount}/>
-                <StatisticLine text="All" value={totalVotes}/>
-                <StatisticLine text="Average" value={(badCount * -1 + goodCount * 1) / totalVotes}/>
-                <StatisticLine text="Positive" value={goodCount / totalVotes}/>
+                <table>
+                    <tbody>
+                    <StatisticLine text="Good" value={goodCount}/>
+                    <StatisticLine text="Neutral" value={neutralCount}/>
+                    <StatisticLine text="Bad" value={badCount}/>
+                    <StatisticLine text="All" value={totalVotes}/>
+                    <StatisticLine text="Average" value={(badCount * -1 + goodCount * 1) / totalVotes}/>
+                    <StatisticLine text="Positive" value={goodCount / totalVotes}/>
+                    </tbody>
+                </table>
             </div>
         )
     }
