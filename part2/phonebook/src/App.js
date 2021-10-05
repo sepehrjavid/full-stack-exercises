@@ -9,7 +9,11 @@ const App = () => {
 
     const addContact = (event) => {
         event.preventDefault();
-        setPersons(persons.concat({name: newName}));
+        if (!persons.map((person) => person.name).includes(newName)) {
+            setPersons(persons.concat({name: newName}));
+        } else {
+            alert(`${newName} is already added to phonebook`);
+        }
         setNewName('');
     };
 
