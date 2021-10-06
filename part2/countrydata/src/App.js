@@ -24,7 +24,7 @@ const App = () => {
             <SearchForm searchField={searchField} setSearchField={setSearchField} onFormSubmit={onFormSubmit}/>
             {searchResult.length > 10 && <p>Too many matches, filter again!</p>}
             {searchResult.length <= 10 && searchResult.length > 1 && <CountryList searchResult={searchResult}/>}
-            {searchResult.length === 1 && <CountryDetail country={searchResult[0]}/>}
+            {searchResult.length === 1 && <CountryDetail country={searchResult[0]} hasBack={false}/>}
             {searchResult.length === 0 && <p>No Match!</p>}
         </div>
     );
