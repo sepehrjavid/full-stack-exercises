@@ -1,4 +1,5 @@
 import React from 'react'
+import WeatherInfo from "./WeatherInfo";
 
 const CountryDetail = ({country, hasBack, setShowIndex}) => {
     return (
@@ -11,6 +12,7 @@ const CountryDetail = ({country, hasBack, setShowIndex}) => {
                 {country.languages.map((language, index) => <li key={index}>{language.name}</li>)}
             </ul>
             <img alt="" src={country.flag}/>
+            <WeatherInfo country={country}/>
             {hasBack &&
             <div>
                 <button onClick={() => setShowIndex(-1)}>Back</button>
