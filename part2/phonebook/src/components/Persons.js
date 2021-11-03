@@ -6,7 +6,7 @@ const removePerson = (person_id, setPersons, persons, setSearchResult) => {
         remove(person_id).then((response) => {
             let new_persons = persons.filter((person) => person.id !== person_id);
             setPersons(new_persons);
-            setSearchResult(new_persons)
+            setSearchResult([...new_persons])
         })
     }
 };

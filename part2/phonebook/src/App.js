@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react'
 import Persons from "./components/Persons";
 import PersonForm from "./components/PersonForm";
 import Filter from "./components/Filter";
-import {create, getAll} from "./services/persons";
+import {create, getAll, update} from "./services/persons";
 
 const App = () => {
     const [persons, setPersons] = useState([]);
@@ -23,17 +23,28 @@ const App = () => {
     const addContact = (event) => {
         event.preventDefault();
         let new_person = {name: newName, number: number};
-        create(new_person).then((response) => {
-            let newPersons = persons.concat(new_person);
-            if (!persons.map((person) => person.name).includes(newName)) {
+        if (!persons.map((person) => person.name).includes(newName)) {
+            create(new_person).then((response) => {
+                let newPersons = persons.concat(new_person);
                 setPersons(newPersons);
-            } else {
-                alert(`${newName} is already added to phonebook`);
-            }
-            setNewName('');
-            setNumber('');
-            setSearchResult([...newPersons]);
-        });
+                setNewName('');
+                setNumber('');
+                setSearchResult([...newPersons]);
+            })
+        } else {
+            let updatingPerson = persons.filter((person) => person.name === newName)[0];
+            update(updatingPerson.id, number).then((response) => {
+                let newPersons = persons.map(p =>
+                    p.name === new_person.name
+                        ? {...p, number: new_person.number}
+                        : p
+                );
+                setPersons(newPersons);
+                setNewName('');
+                setNumber('');
+                setSearchResult([...newPersons]);
+            })
+        }
     };
 
     const search = (event) => {
@@ -66,7 +77,8 @@ const App = () => {
             <PersonForm addContact={addContact} newName={newName} newNameChange={newNameChange} number={number}
                         numberChange={numberChange}/>
             <h2>Numbers</h2>
-            <Persons searchResult={searchResult} persons={persons} setPersons={setPersons} setSearchResult={setSearchResult}/>
+            <Persons searchResult={searchResult} persons={persons} setPersons={setPersons}
+                     setSearchResult={setSearchResult}/>
         </div>
     )
 };
