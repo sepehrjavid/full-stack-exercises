@@ -22,15 +22,18 @@ const App = () => {
 
     const addContact = (event) => {
         event.preventDefault();
-        let newPersons = persons.concat({name: newName, number: number});
-        if (!persons.map((person) => person.name).includes(newName)) {
-            setPersons(newPersons);
-        } else {
-            alert(`${newName} is already added to phonebook`);
-        }
-        setNewName('');
-        setNumber('');
-        setSearchResult([...newPersons]);
+        let new_person = {name: newName, number: number};
+        axios.post("http://localhost:3001/persons", new_person).then((response) => {
+            let newPersons = persons.concat(new_person);
+            if (!persons.map((person) => person.name).includes(newName)) {
+                setPersons(newPersons);
+            } else {
+                alert(`${newName} is already added to phonebook`);
+            }
+            setNewName('');
+            setNumber('');
+            setSearchResult([...newPersons]);
+        });
     };
 
     const search = (event) => {
