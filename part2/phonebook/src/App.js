@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react'
 import Persons from "./components/Persons";
 import PersonForm from "./components/PersonForm";
 import Filter from "./components/Filter";
-import axios from 'axios'
+import {create, getAll} from "./services/persons";
 
 const App = () => {
     const [persons, setPersons] = useState([]);
@@ -13,17 +13,17 @@ const App = () => {
 
 
     useEffect(() => {
-        axios.get("http://localhost:3001/persons").then((response) => {
+        getAll().then((response) => {
             setPersons(response.data);
             setSearchResult(response.data);
-        })
+        });
     }, []);
 
 
     const addContact = (event) => {
         event.preventDefault();
         let new_person = {name: newName, number: number};
-        axios.post("http://localhost:3001/persons", new_person).then((response) => {
+        create(new_person).then((response) => {
             let newPersons = persons.concat(new_person);
             if (!persons.map((person) => person.name).includes(newName)) {
                 setPersons(newPersons);
