@@ -66,7 +66,7 @@ const App = () => {
             <PersonForm addContact={addContact} newName={newName} newNameChange={newNameChange} number={number}
                         numberChange={numberChange}/>
             <h2>Numbers</h2>
-            <Persons searchResult={searchResult}/>
+            <Persons searchResult={searchResult} persons={persons} setPersons={setPersons} setSearchResult={setSearchResult}/>
         </div>
     )
 };
