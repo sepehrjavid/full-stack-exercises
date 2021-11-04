@@ -12,6 +12,7 @@ const App = () => {
     const [number, setNumber] = useState('');
     const [searchField, setSearchField] = useState('');
     const [message, setMessage] = useState(null);
+    const [notifClassName, setNotifClassName] = useState("error");
 
 
     useEffect(() => {
@@ -33,6 +34,7 @@ const App = () => {
                 setNumber('');
                 setSearchResult([...newPersons]);
                 setMessage(`Contact added`);
+                setNotifClassName("message");
                 setTimeout(() => {
                     setMessage(null)
                 }, 5000)
@@ -50,6 +52,13 @@ const App = () => {
                 setNumber('');
                 setSearchResult([...newPersons]);
                 setMessage(`Contact updated`);
+                setNotifClassName("message");
+                setTimeout(() => {
+                    setMessage(null)
+                }, 5000)
+            }).catch((err) => {
+                setMessage(`Information of ${newName} has already been removed`);
+                setNotifClassName("error");
                 setTimeout(() => {
                     setMessage(null)
                 }, 5000)
@@ -82,7 +91,7 @@ const App = () => {
     return (
         <div>
             <h2>Phonebook</h2>
-            <Notification message={message}/>
+            <Notification message={message} notifClassName={notifClassName}/>
             <Filter search={search} searchField={searchField} searchFieldChange={searchFieldChange}/>
             <h2>Add New</h2>
             <PersonForm addContact={addContact} newName={newName} newNameChange={newNameChange} number={number}
