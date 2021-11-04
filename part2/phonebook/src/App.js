@@ -3,6 +3,7 @@ import Persons from "./components/Persons";
 import PersonForm from "./components/PersonForm";
 import Filter from "./components/Filter";
 import {create, getAll, update} from "./services/persons";
+import Notification from "./components/Notification";
 
 const App = () => {
     const [persons, setPersons] = useState([]);
@@ -10,6 +11,7 @@ const App = () => {
     const [newName, setNewName] = useState('');
     const [number, setNumber] = useState('');
     const [searchField, setSearchField] = useState('');
+    const [message, setMessage] = useState(null);
 
 
     useEffect(() => {
@@ -25,11 +27,15 @@ const App = () => {
         let new_person = {name: newName, number: number};
         if (!persons.map((person) => person.name).includes(newName)) {
             create(new_person).then((response) => {
-                let newPersons = persons.concat(new_person);
+                let newPersons = persons.concat(response.data);
                 setPersons(newPersons);
                 setNewName('');
                 setNumber('');
                 setSearchResult([...newPersons]);
+                setMessage(`Contact added`);
+                setTimeout(() => {
+                    setMessage(null)
+                }, 5000)
             })
         } else {
             let updatingPerson = persons.filter((person) => person.name === newName)[0];
@@ -43,6 +49,10 @@ const App = () => {
                 setNewName('');
                 setNumber('');
                 setSearchResult([...newPersons]);
+                setMessage(`Contact updated`);
+                setTimeout(() => {
+                    setMessage(null)
+                }, 5000)
             })
         }
     };
@@ -72,6 +82,7 @@ const App = () => {
     return (
         <div>
             <h2>Phonebook</h2>
+            <Notification message={message}/>
             <Filter search={search} searchField={searchField} searchFieldChange={searchFieldChange}/>
             <h2>Add New</h2>
             <PersonForm addContact={addContact} newName={newName} newNameChange={newNameChange} number={number}
